@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="63fd7127-ca56-4901-89f4-745cc28def4e" activeEnvironment="Default" name="EclipsePrueba" resourceRoot="" soapui-version="5.7.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="99838348-9f38-4f4b-9d59-1eb24947849c" wsaVersion="NONE" name="WSDLFileSOAP" type="wsdl" bindingName="{http://localhost/EclipsePrueba/}WSDLFileSOAP" soapVersion="1_1" anonymous="optional" definition="file:/C:/Proyectos/EclipsePrueba/WSDLFile.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\Proyectos\EclipsePrueba\WSDLFile.wsdl"><con:part><con:url>file:\C:\Proyectos\EclipsePrueba\WSDLFile.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="WSDLFile" targetNamespace="http://localhost/EclipsePrueba/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost/EclipsePrueba/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://localhost/EclipsePrueba/">
+      <xsd:element name="GetJugador">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="idJugador" type="xsd:int"/>
+            <xsd:element name="nombreJugador" type="xsd:string"/>
+            <xsd:element name="nacionalidad" type="xsd:string"/>
+            <xsd:element name="dorsal" type="xsd:int"/>
+            <xsd:element name="equipo" type="tns:EquipoType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetJugadorResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="idJugador" type="xsd:int"/>
+            <xsd:element name="nombreJugador" type="xsd:string"/>
+            <xsd:element name="nacionalidad" type="xsd:string"/>
+            <xsd:element name="dorsal" type="xsd:int"/>
+            <xsd:element name="equipo" type="tns:EquipoType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="EquipoType">
+        <xsd:sequence>
+          <xsd:element name="idEquipo" type="xsd:int"/>
+          <xsd:element name="nombreEquipo" type="xsd:string"/>
+          <xsd:element name="liga" type="xsd:string"/>
+          <xsd:element name="ciudad" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetJugadorRequest">
+    <wsdl:part element="tns:GetJugador" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetJugadorResponse">
+    <wsdl:part element="tns:GetJugadorResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="WSDLFile">
+    <wsdl:operation name="GetJugador">
+      <wsdl:input message="tns:GetJugadorRequest"/>
+      <wsdl:output message="tns:GetJugadorResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSDLFileSOAP" type="tns:WSDLFile">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetJugador">
+      <soap:operation soapAction="http://localhost/EclipsePrueba/GetJugador"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSDLFile">
+    <wsdl:port binding="tns:WSDLFileSOAP" name="WSDLFileSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://www.example.org/</con:endpoint></con:endpoints><con:operation id="70c78984-3834-4922-ac0e-9e3463ff73a9" isOneWay="false" action="http://localhost/EclipsePrueba/GetJugador" name="GetJugador" bindingOperationName="GetJugador" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="558e6c5b-2b4a-4cab-96e9-f0c3571f3520" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/EclipsePrueba/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ecl="http://localhost/EclipsePrueba/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ecl:GetJugador>\r
+         <idJugador>1</idJugador>\r
+         <nombreJugador>Pablo Muñoz</nombreJugador>\r
+         <nacionalidad>España</nacionalidad>\r
+         <dorsal>1</dorsal>\r
+         <equipo>\r
+            <idEquipo>1</idEquipo>\r
+            <nombreEquipo>Granada CF</nombreEquipo>\r
+            <liga>LaLiga SmartBank</liga>\r
+            <ciudad>Granada</ciudad>\r
+         </equipo>\r
+      </ecl:GetJugador>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://localhost/EclipsePrueba/GetJugador"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
