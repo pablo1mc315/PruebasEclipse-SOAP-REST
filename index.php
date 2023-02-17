@@ -1,6 +1,6 @@
 <?php
 
-class EquipoType
+class Equipo
 {
 
     // Atributos
@@ -21,9 +21,30 @@ class EquipoType
         $this->ciudad = $ciudad;
     }
 
+    // Getters
+    function getIdEquipo ()
+    {
+        return $this->idEquipo;
+    }
+
+    function getNombreEquipo ()
+    {
+        return $this->nombreEquipo;
+    }
+
+    function getLiga ()
+    {
+        return $this->liga;
+    }
+
+    function getCiudad ()
+    {
+        return $this->ciudad;
+    }
+
 }
 
-class JugadorResponse
+class Jugador
 {
 
     // Atributos
@@ -35,7 +56,7 @@ class JugadorResponse
 
     private $dorsal;
 
-    // private $equipo;
+    private $equipo;
 
     // Constructor
     function __construct ($idJugador, $nombreJugador, $nacionalidad, $dorsal, $equipo)
@@ -44,36 +65,53 @@ class JugadorResponse
         $this->nombreJugador = $nombreJugador;
         $this->nacionalidad = $nacionalidad;
         $this->dorsal = $dorsal;
-        $this->equipo = new EquipoType($equipo->idEquipo, $equipo->nombreEquipo, $equipo->liga, $equipo->ciudad);
+        $this->equipo = $equipo;
     }
 
-}
-
-class Jugador
-{
-
-    public function GetJugador ($GetJugador)
+    // Funcion que devuelve la respuesta en formato JSON
+    public function response ()
     {
-        return new JugadorResponse($GetJugador->idJugador, $GetJugador->nombreJugador, $GetJugador->nacionalidad, $GetJugador->dorsal, $GetJugador->equipo);
+        $json = array(
+                "ID" => $this->idJugador,
+                "Nombre" => $this->nombreJugador,
+                "Nacionalidad" => $this->nacionalidad,
+                "Dorsal" => $this->dorsal,
+                "Equipo" => array(
+                        "ID" => $this->equipo->getIdEquipo(),
+                        "Nombre" => $this->equipo->getNombreEquipo(),
+                        "Liga" => $this->equipo->getLiga(),
+                        "Ciudad" => $this->equipo->getCiudad()
+                )
+        );
+
+        return json_encode($json);
     }
 
 }
 
-// Conexion
-try
+// Recogemos las variables de la petición GET de Postman
+$idJugador = $_GET['idJugador'];
+$nombreJugador = $_GET['nombreJugador'];
+$nacionalidad = $_GET['nacionalidad'];
+$dorsal = $_GET['dorsal'];
+$idEquipo = $_GET['idEquipo'];
+$nombreEquipo = $_GET['nombreEquipo'];
+$liga = $_GET['liga'];
+$ciudad = $_GET['ciudad'];
+
+// Si todas las variables han sido inicializadas, enviamos llamamos a la función response() para que nos las muestre
+if (isset($idJugador) && isset($nombreJugador) && isset($nacionalidad) && isset($dorsal) && isset($idEquipo) && isset($nombreEquipo) && isset($liga) && isset($ciudad))
 {
-    $options = [
-            'uri' => 'http://localhost/EclipsePrueba/index.php'
-    ];
-    $server = new SoapServer("http://localhost/EclipsePrueba/WSDLFile.wsdl", $options);
-    $server->setClass('Jugador');
-    $data = file_get_contents("php://input");
-    $server->handle($data);
+    $equipo = new Equipo($idEquipo, $nombreEquipo, $liga, $ciudad);
+    $jugador = new Jugador($idJugador, $nombreJugador, $nacionalidad, $dorsal, $equipo);
+    http_response_code(200);
+    echo $jugador->response();
 }
 
-catch (SOAPFault $f)
+else
 {
-    print("ERROR");
+    http_response_code(500);
+    echo "ERROR: No se han enviado todas las variables necesarias.";
 }
 
 ?>
